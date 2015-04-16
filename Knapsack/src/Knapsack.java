@@ -1,3 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//             //                                                             //
+//   #####     // Knapsack -- a simple example                                //
+//  ######     // (!) 2015 Giovanni Squillero <giovanni.squillero@polito.it>  //
+//  ###   \    //                                                             //
+//   ##G  c\   //                                                             //
+//   #     _\  //                                                             //
+//   |   _/    //                                                             //
+//   |  _/     //                                                             //
+//             // 03FYZ - Tecniche di programmazione 2014-15                  //
+////////////////////////////////////////////////////////////////////////////////
+
 import java.util.HashSet;
 import java.util.Set;
 
