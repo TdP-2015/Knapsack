@@ -34,7 +34,6 @@ public class Item {
 	}
 	@Override
 	public String toString() {
-		return "Item [value=" + value + ", weight=" + weight + "]";
-	}
-	
+		return "(v=" + value + ", w=" + weight + ")";
+	}	
 }

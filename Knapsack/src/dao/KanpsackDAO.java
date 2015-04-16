@@ -24,7 +24,7 @@ import db.DBConnect;
 
 public class KanpsackDAO {
 	public List<Item> getItems() {
-		final String sql = "SELECT * FROM objects LIMIT 50";
+		final String sql = "SELECT * FROM objects LIMIT 45";
 		List<Item> items = new ArrayList<Item>();
 	
 		try {

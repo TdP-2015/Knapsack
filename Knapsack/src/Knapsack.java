@@ -1,67 +1,65 @@
-////////////////////////////////////////////////////////////////////////////////
-//             //                                                             //
-//   #####     // Knapsack -- a simple example                                //
-//  ######     // (!) 2015 Giovanni Squillero <giovanni.squillero@polito.it>  //
-//  ###   \    //                                                             //
-//   ##G  c\   //                                                             //
-//   #     _\  //                                                             //
-//   |   _/    //                                                             //
-//   |  _/     //                                                             //
-//             // 03FYZ - Tecniche di programmazione 2014-15                  //
-////////////////////////////////////////////////////////////////////////////////
-
 import java.util.HashSet;
 import java.util.Set;
 
-import bean.Item;
+import bean.*;
 
 public class Knapsack {
-	private Set<Item> items;
-	private int totWeight, totValue;
-	private int capacity;
-
-	public Boolean isValid() {
-		if(totWeight > capacity)
-			return false;
-		return true;
-	}
-	
-	public int getTotWeight() {
-		return totWeight;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Knapsack [actualWeight="
+				+ actualWeight + ", actualValue=" + actualValue + ", items="
+				+ items + "]";
 	}
 
-	public int getTotValue() {
-		return totValue;
-	}
-
-	public Knapsack() {
-		items = new HashSet<Item>();
-		totWeight = totValue = 0;
-		capacity = 420;
-	}
-	
-	public void addItem(Item i) {
-		if(!items.add(i)) {
-			throw new RuntimeException();
-		}
-		totWeight += i.getWeight();
-		totValue += i.getValue();
-	}
-	public void removeItem(Item i) {
-		if(!items.remove(i)) {
-			throw new RuntimeException();
-		}
-		totWeight -= i.getWeight();
-		totValue -= i.getValue();
-	}
-
+	/**
+	 * @return the items
+	 */
 	public Set<Item> getItems() {
 		return items;
 	}
 
-	@Override
-	public String toString() {
-		return "Knapsack [items=" + items + ", totWeight=" + totWeight
-				+ ", totValue=" + totValue + "]";
-	}	
+	private int capacity;
+	private Set<Item> items;
+	private int actualWeight, actualValue;
+
+	public Knapsack(int cap) {
+		capacity = cap;
+		items = new HashSet<Item>();
+	}
+
+	/**
+	 * @return the capacity
+	 */
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void add(Item i) {
+		if (!items.add(i)) {
+			throw new RuntimeException();
+		}
+		actualWeight += i.getWeight();
+		actualValue += i.getValue();
+	}
+
+	public void remove(Item i) {
+		if (!items.remove(i)) {
+			throw new RuntimeException();
+		}
+		actualWeight -= i.getWeight();
+		actualValue -= i.getValue();
+	}
+
+	public int getWeight() {
+		return actualWeight;
+	}
+
+	public int getValue() {
+		return actualValue;
+	}
 }
