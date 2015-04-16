@@ -10,38 +10,31 @@
 //             // 03FYZ - Tecniche di programmazione 2014-15                  //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dao;
+package bean;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import bean.Item;
-import db.DBConnect;
-
-public class KanpsackDAO {
-	public List<Item> getItems() {
-		final String sql = "SELECT * FROM objects LIMIT 50";
-		List<Item> items = new ArrayList<Item>();
-	
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				Item i = new Item(rs.getDouble("value"), rs.getDouble("weight"));
-				items.add(i);
-			}
-
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		return items;
+public class Item {
+	private double value;
+	private double weight;
+	public double getValue() {
+		return value;
 	}
+	public void setValue(double val) {
+		this.value = val;
+	}
+	public double getWeight() {
+		return weight;
+	}
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+	public Item(double value, double weight) {
+		super();
+		this.value = value;
+		this.weight = weight;
+	}
+	@Override
+	public String toString() {
+		return "Item [value=" + value + ", weight=" + weight + "]";
+	}
+	
 }

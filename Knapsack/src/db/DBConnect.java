@@ -10,38 +10,41 @@
 //             // 03FYZ - Tecniche di programmazione 2014-15                  //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dao;
+package db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import bean.Item;
-import db.DBConnect;
+public class DBConnect {
 
-public class KanpsackDAO {
-	public List<Item> getItems() {
-		final String sql = "SELECT * FROM objects LIMIT 50";
-		List<Item> items = new ArrayList<Item>();
-	
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				Item i = new Item(rs.getDouble("value"), rs.getDouble("weight"));
-				items.add(i);
-			}
+	static private final String jdbcUrl = "jdbc:mysql://localhost/knapsack?user=root";
+	static private DBConnect instance = null;
 
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		return items;
+	private DBConnect() {
+		instance = this;
+		// System.out.println("instance created") ;
 	}
+
+	public static DBConnect getInstance() {
+		if (instance == null)
+			return new DBConnect();
+		else {
+			// System.out.println("instance reused") ;
+			return instance;
+		}
+	}
+
+	public Connection getConnection() {
+		try {
+			Connection conn = DriverManager.getConnection(jdbcUrl);
+			return conn;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("Cannot get connection " + jdbcUrl, e);
+		}
+	}
+
 }

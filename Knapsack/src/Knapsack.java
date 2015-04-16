@@ -10,38 +10,58 @@
 //             // 03FYZ - Tecniche di programmazione 2014-15                  //
 ////////////////////////////////////////////////////////////////////////////////
 
-package dao;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import bean.Item;
-import db.DBConnect;
 
-public class KanpsackDAO {
-	public List<Item> getItems() {
-		final String sql = "SELECT * FROM objects LIMIT 50";
-		List<Item> items = new ArrayList<Item>();
+public class Knapsack {
+	private Set<Item> items;
+	private int totWeight, totValue;
+	private int capacity;
+
+	public Boolean isValid() {
+		if(totWeight > capacity)
+			return false;
+		return true;
+	}
 	
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				Item i = new Item(rs.getDouble("value"), rs.getDouble("weight"));
-				items.add(i);
-			}
+	public int getTotWeight() {
+		return totWeight;
+	}
 
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+	public int getTotValue() {
+		return totValue;
+	}
+
+	public Knapsack() {
+		items = new HashSet<Item>();
+		totWeight = totValue = 0;
+		capacity = 420;
+	}
+	
+	public void addItem(Item i) {
+		if(!items.add(i)) {
+			throw new RuntimeException();
 		}
+		totWeight += i.getWeight();
+		totValue += i.getValue();
+	}
+	public void removeItem(Item i) {
+		if(!items.remove(i)) {
+			throw new RuntimeException();
+		}
+		totWeight -= i.getWeight();
+		totValue -= i.getValue();
+	}
+
+	public Set<Item> getItems() {
 		return items;
 	}
+
+	@Override
+	public String toString() {
+		return "Knapsack [items=" + items + ", totWeight=" + totWeight
+				+ ", totValue=" + totValue + "]";
+	}	
 }
